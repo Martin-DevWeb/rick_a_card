@@ -1,2 +1,18 @@
-<p>page-home works!</p>
-<a [routerLink]="['cards']">Voir mes cards</a>
+<button
+  class="btn btn-primary position-absolute top-50 start-50 translate-middle"
+  (click)="pickACard()"
+>
+  Tire une carte !
+</button>
+<div *ngIf="isLoading">
+  <h1 class="position-absolute top-50 start-50 translate-middle">BOUH</h1>
+</div>
+<div *ngIf="drawnCard">
+  <p>{{ drawnCard.name }}</p>
+</div>
+<button
+  class="btn btn-secondary position-absolute bottom-0 end-0 m-2"
+  [routerLink]="['cards']"
+>
+  Voir mes cartes
+</button>
