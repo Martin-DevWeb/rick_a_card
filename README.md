@@ -1,3 +1,3 @@
 # RickACard
 
-Build and deployment tests.
+Build and deployment tests
