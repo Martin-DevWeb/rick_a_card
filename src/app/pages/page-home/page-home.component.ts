@@ -12,7 +12,7 @@ export class PageHomeComponent implements OnInit {
   isLoading = false;
   count!: number;
   drawnCard?: Character;
-  Json: any;
+  alreadyHaveIt: boolean = false;
 
   constructor(
     private cardsService: CardsService,
@@ -42,8 +42,15 @@ export class PageHomeComponent implements OnInit {
   }
 
   localStorage(key: number, value: Character) {
-    if (this.localServ.getItem(key.toString()) !== null) {
+    console.log(this.localServ.getItem(key.toString()));
+    if (this.localServ.getItem(key.toString()) === null) {
       this.localServ.setItem(key.toString(), value);
+    } else {
+      this.alreadyHaveIt = true;
     }
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 }
