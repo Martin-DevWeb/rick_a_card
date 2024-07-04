@@ -2,17 +2,43 @@
   class="btn btn-primary position-absolute top-50 start-50 translate-middle"
   (click)="pickACard()"
 >
-  Tire une carte !
+  Pick a card !
 </button>
 <div *ngIf="isLoading">
-  <h1 class="position-absolute top-50 start-50 translate-middle">BOUH</h1>
+  <h1
+    class="position-absolute top-50 start-50 translate-middle text-bg-warning p-3 border border-dark rounded-pill"
+  >
+    LOADING...
+  </h1>
 </div>
 <div *ngIf="drawnCard">
-  <p>{{ drawnCard.name }}</p>
+  <p></p>
+</div>
+<div *ngIf="drawnCard && !isLoading">
+  <div
+    class="card position-absolute top-50 start-50 translate-middle"
+    style="width: 18rem"
+  >
+    <img
+      src="{{ drawnCard.image }}"
+      class="card-img-top"
+      alt="{{ drawnCard.name }}"
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{ drawnCard.name }}</h5>
+      <h3>{{ drawnCard.species }}</h3>
+      <a
+        [routerLink]="['cards']"
+        class="btn btn-primary"
+        (click)="localStorage(drawnCard.id, drawnCard)"
+        >Stock it !</a
+      >
+    </div>
+  </div>
 </div>
 <button
   class="btn btn-secondary position-absolute bottom-0 end-0 m-2"
   [routerLink]="['cards']"
 >
-  Voir mes cartes
+  My collection
 </button>

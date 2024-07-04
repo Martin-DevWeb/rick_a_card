@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Character } from 'src/app/models/character';
 import { CardsService } from 'src/app/services/cards.service';
+import { LocalstorageService } from 'src/app/services/localstorage.service';
 
 @Component({
   selector: 'app-page-home',
@@ -11,8 +12,12 @@ export class PageHomeComponent implements OnInit {
   isLoading = false;
   count!: number;
   drawnCard?: Character;
+  Json: any;
 
-  constructor(private cardsService: CardsService) {}
+  constructor(
+    private cardsService: CardsService,
+    private localServ: LocalstorageService
+  ) {}
 
   ngOnInit(): void {
     this.cardsService.getCharacters().subscribe((data: any) => {
@@ -34,5 +39,11 @@ export class PageHomeComponent implements OnInit {
 
   randomValue(): number {
     return Math.floor(Math.random() * this.count) + 1;
+  }
+
+  localStorage(key: number, value: Character) {
+    if (this.localServ.getItem(key.toString()) !== null) {
+      this.localServ.setItem(key.toString(), value);
+    }
   }
 }
