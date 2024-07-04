@@ -32,7 +32,6 @@ export class PageHomeComponent implements OnInit {
     this.isLoading = true;
     this.cardsService.getCharacter(this.randomValue()).subscribe({
       next: (res) => {
-        console.log(res);
         this.drawnCard = res;
         this.isLoading = false;
         if (this.localServ.getItem(res.id.toString())) {
@@ -48,7 +47,6 @@ export class PageHomeComponent implements OnInit {
   }
 
   localStorage(key: number, value: Character) {
-    console.log(this.localServ.getItem(key.toString()));
     if (!this.alreadyHaveIt) {
       this.localServ.setItem(key.toString(), value);
     }
@@ -70,23 +68,28 @@ export class PageHomeComponent implements OnInit {
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
     let seconds = new Date().getSeconds();
-    let currentTime = [hours, minutes, seconds];
+    let currentTime = hours * 3600 + minutes * 60 + seconds;
 
-    let updateTime = this.localServ.getItem('hour')?.split(':');
+    let time;
 
-    if (this.localServ.getItem('hour') == null) {
+    if (this.localServ.getItem('hour') != null) {
+      let updateTimeText = this.localServ.getItem('hour')?.split(':');
+      let updateTime =
+        Number(updateTimeText![0]) * 3600 +
+        Number(updateTimeText![1]) * 60 +
+        Number(updateTimeText![2]);
+      time = updateTime;
+    }
+
+    if (currentTime >= time!) {
+      document.querySelector('#clik')?.removeAttribute('disabled');
+      this.localServ.removeItem('hour');
+    }
+
+    if (this.localServ.getItem('hour') === null) {
       document.querySelector('#click')?.removeAttribute('disabled');
     } else {
       this.nextClick = this.localServ.getItem('hour');
-    }
-
-    if (currentTime[0] >= Number(updateTime![0])) {
-      if (currentTime[1] >= Number(updateTime![1])) {
-        if (currentTime[2] >= Number(updateTime![2])) {
-          document.querySelector('#clik')?.removeAttribute('disabled');
-          this.localServ.removeItem('hour');
-        }
-      }
     }
   }
 }
