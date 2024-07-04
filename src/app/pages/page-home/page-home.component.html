@@ -28,21 +28,21 @@
       <h5 class="card-title">{{ drawnCard.name }}</h5>
       <h3>{{ drawnCard.species }}</h3>
       <a
-        *ngIf="alreadyHaveIt"
+        *ngIf="!alreadyHaveIt"
         [routerLink]="['cards']"
         class="btn btn-primary"
         (click)="localStorage(drawnCard.id, drawnCard)"
       >
         Stock it !
       </a>
-      <a (click)="reloadPage()" class="btn btn-primary" *ngIf="!alreadyHaveIt"
+      <a (click)="reloadPage()" class="btn btn-primary" *ngIf="alreadyHaveIt"
         >Shoot, already have it...</a
       >
     </div>
   </div>
 </div>
 <button
-  class="btn btn-secondary position-absolute bottom-0 end-0 m-2"
+  class="btn btn-secondary position-absolute top-0 end-0 m-2"
   [routerLink]="['cards']"
 >
   My collection

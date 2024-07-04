@@ -1,2 +1,18 @@
-<p>page-cards works!</p>
-<a [routerLink]="['']">Retourner à l'accueil</a>
+<div class="d-flex justify-content-evenly container flex-wrap">
+  <div *ngFor="let char of values">
+    <div class="card m-3" style="width: 18rem; height: 26rem">
+      <img src="{{ char.image }}" class="card-img-top" alt="{{ char.name }}" />
+      <div class="card-body">
+        <h5 class="card-title">{{ char.name }}</h5>
+        <h3>{{ char.species }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button
+  class="btn btn-primary position-absolute top-0 end-0 m-2"
+  [routerLink]="['']"
+>
+  Retourner à l'accueil
+</button>

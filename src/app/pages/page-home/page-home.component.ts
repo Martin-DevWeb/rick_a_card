@@ -32,6 +32,9 @@ export class PageHomeComponent implements OnInit {
         console.log(res);
         this.drawnCard = res;
         this.isLoading = false;
+        if (this.localServ.getItem(res.id.toString())) {
+          this.alreadyHaveIt = true;
+        }
       },
       error: () => {},
     });
@@ -43,10 +46,8 @@ export class PageHomeComponent implements OnInit {
 
   localStorage(key: number, value: Character) {
     console.log(this.localServ.getItem(key.toString()));
-    if (this.localServ.getItem(key.toString()) === null) {
+    if (!this.alreadyHaveIt) {
       this.localServ.setItem(key.toString(), value);
-    } else {
-      this.alreadyHaveIt = true;
     }
   }
 
