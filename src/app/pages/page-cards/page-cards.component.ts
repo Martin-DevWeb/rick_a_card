@@ -14,7 +14,6 @@ export class PageCardsComponent implements OnInit {
 
   ngOnInit(): void {
     this.values = this.allStorage();
-    console.log(this.values);
   }
 
   allStorage() {
@@ -24,8 +23,10 @@ export class PageCardsComponent implements OnInit {
       key;
 
     for (; (key = keys[i]); i++) {
-      let char = JSON.stringify(this.localServ.getItem(key));
-      archive.push(JSON.parse(char));
+      if (key != 'hour') {
+        let char = JSON.stringify(this.localServ.getItem(key));
+        archive.push(JSON.parse(char));
+      }
     }
 
     return archive;

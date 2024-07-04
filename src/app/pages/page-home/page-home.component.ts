@@ -13,6 +13,7 @@ export class PageHomeComponent implements OnInit {
   count!: number;
   drawnCard?: Character;
   alreadyHaveIt: boolean = false;
+  nextClick!: string | null;
 
   constructor(
     private cardsService: CardsService,
@@ -23,6 +24,8 @@ export class PageHomeComponent implements OnInit {
     this.cardsService.getCharacters().subscribe((data: any) => {
       return (this.count = data.info.count);
     });
+
+    this.checkTime();
   }
 
   pickACard() {
@@ -53,5 +56,37 @@ export class PageHomeComponent implements OnInit {
 
   reloadPage() {
     window.location.reload();
+  }
+
+  storeTime() {
+    let hours = new Date().getHours();
+    let minutes = new Date().getMinutes();
+    let seconds = new Date().getSeconds();
+    let currentTime = hours + 2 + ':' + minutes + ':' + seconds;
+    this.localServ.setItem('hour', currentTime);
+  }
+
+  checkTime() {
+    let hours = new Date().getHours();
+    let minutes = new Date().getMinutes();
+    let seconds = new Date().getSeconds();
+    let currentTime = [hours, minutes, seconds];
+
+    let updateTime = this.localServ.getItem('hour')?.split(':');
+
+    if (this.localServ.getItem('hour') == null) {
+      document.querySelector('#click')?.removeAttribute('disabled');
+    } else {
+      this.nextClick = this.localServ.getItem('hour');
+    }
+
+    if (currentTime[0] >= Number(updateTime![0])) {
+      if (currentTime[1] >= Number(updateTime![1])) {
+        if (currentTime[2] >= Number(updateTime![2])) {
+          document.querySelector('#clik')?.removeAttribute('disabled');
+          this.localServ.removeItem('hour');
+        }
+      }
+    }
   }
 }

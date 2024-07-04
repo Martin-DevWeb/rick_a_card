@@ -1,9 +1,16 @@
 <button
+  id="click"
   class="btn btn-primary position-absolute top-50 start-50 translate-middle"
-  (click)="pickACard()"
+  (click)="pickACard(); storeTime()"
+  disabled
 >
   Pick a card !
 </button>
+<div *ngIf="nextClick">
+  <p class="position-absolute top-50 start-50 translate-middle mt-3 pt-5">
+    Next card at : {{ nextClick }}
+  </p>
+</div>
 <div *ngIf="isLoading">
   <h1
     class="position-absolute top-50 start-50 translate-middle text-bg-warning p-3 border border-dark rounded-pill"
