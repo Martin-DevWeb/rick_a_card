@@ -57,31 +57,22 @@ export class PageHomeComponent implements OnInit {
   }
 
   storeTime() {
-    let hours = new Date().getHours();
-    let minutes = new Date().getMinutes();
-    let seconds = new Date().getSeconds();
-    let currentTime = hours + 2 + ':' + minutes + ':' + seconds;
+    let currentTime = new Date();
+    currentTime.setHours(currentTime.getHours() + 2);
     this.localServ.setItem('hour', currentTime);
   }
 
   checkTime() {
-    let hours = new Date().getHours();
-    let minutes = new Date().getMinutes();
-    let seconds = new Date().getSeconds();
-    let currentTime = hours * 3600 + minutes * 60 + seconds;
+    let currentTime = new Date().toString();
 
     let time;
 
     if (this.localServ.getItem('hour') != null) {
-      let updateTimeText = this.localServ.getItem('hour')?.split(':');
-      let updateTime =
-        Number(updateTimeText![0]) * 3600 +
-        Number(updateTimeText![1]) * 60 +
-        Number(updateTimeText![2]);
-      time = updateTime;
+      let updateTimeText = this.localServ.getItem('hour');
+      time = updateTimeText;
     }
 
-    if (currentTime >= time!) {
+    if (Date.parse(currentTime) >= Date.parse(time!)) {
       document.querySelector('#clik')?.removeAttribute('disabled');
       this.localServ.removeItem('hour');
     }
